@@ -347,8 +347,16 @@ def parse_ambrose_live_hire(text: str) -> List[Dict[str, str]]:
     current_site = ""
     address_parts = []
 
+    # PDF text extraction can flip this heading in either direction:
+    #   Order No: P141/H5660 Delivery Address ...
+    # or
+    #   P141/H5660Order No: Delivery Address ...
+    # so the order number is captured from either side of the Order No label.
     contract_re = re.compile(
-        r"^(?P<contract>\d{6,12})\s+.*?Order\s+No:\s*(?P<order>[A-Za-z0-9/& .-]+)\s+Delivery\s+Address\s*(?P<addr>.*)$",
+        r"^(?P<contract>\d{6,12})\s+.*?"
+        r"(?:Order\s+No:\s*(?P<order_after>P[A-Za-z0-9&]*(?:\s*/\s*H?\d+)?)\s+Delivery\s+Address|"
+        r"(?P<order_before>P[A-Za-z0-9&]*(?:\s*/\s*H?\d+)?)\s*Order\s+No:\s+Delivery\s+Address)"
+        r"\s*(?P<addr>.*)$",
         re.I,
     )
     item_re = re.compile(
@@ -389,7 +397,7 @@ def parse_ambrose_live_hire(text: str) -> List[Dict[str, str]]:
         if cm:
             commit_site()
             current_contract = cm.group("contract")
-            current_order = clean_cell(cm.group("order"))
+            current_order = clean_cell(cm.group("order_after") or cm.group("order_before") or "")
             current_site = ""
             address_parts = [cm.group("addr")] if cm.group("addr") else []
             continue
