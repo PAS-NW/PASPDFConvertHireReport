@@ -24,7 +24,7 @@ OUTPUT_COLUMNS = [
     "Net Weekly",
 ]
 
-st.set_page_config(page_title="PAS Supplier PDF Converter", page_icon="pas_logo.png", layout="wide")
+st.set_page_config(page_title="PAS Supplier Hire Report PDF Converter", page_icon="pas_logo.png", layout="wide")
 
 # =========================
 # PAS UI STYLE - copied to match existing PAS apps
@@ -202,7 +202,7 @@ with st.sidebar:
         st.markdown('<div style="background:#FFD400;color:#000;border-radius:14px;padding:18px;text-align:center;font-weight:950;font-size:30px;">PAS</div>', unsafe_allow_html=True)
     st.markdown(
         """
-        <div class="pas-sidebar-title">PAS Supplier<br>PDF Converter</div>
+        <div class="pas-sidebar-title">PAS Supplier Hire Report<br>PDF Converter</div>
         <div class="pas-yellow-line"></div>
         <div class="pas-sidebar-copy">Upload Supplier hire report PDFs, then export one clean standard Excel file.</div>
         <div class="pas-sidebar-rule"></div>
