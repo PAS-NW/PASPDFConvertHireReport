@@ -744,6 +744,36 @@ def render_table(df: pd.DataFrame):
 # =========================
 st.markdown('<div class="pas-upload-card"><div class="pas-upload-title">Upload Vendor Hire Report PDF(s)</div>', unsafe_allow_html=True)
 pdf_files = st.file_uploader("Upload Vendor Hire Report PDF(s)", type=["pdf"], accept_multiple_files=True, label_visibility="collapsed", key="pdf_upload")
+
+if pdf_files:
+    st.markdown(
+        """
+        <style>
+        div[data-testid="stFileUploader"] {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            min-height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+        }
+        div[data-testid="stFileUploaderDropzone"],
+        div[data-testid="stFileUploaderDropzoneInstructions"],
+        div[data-testid="stFileUploaderFile"] {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            min-height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
 if pdf_files:
     for f in pdf_files:
         render_selected_file_card(f)
